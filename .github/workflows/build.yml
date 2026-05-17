@@ -35,6 +35,16 @@ jobs:
           GPR_KEY: ${{ secrets.GPR_KEY }}
         run: flutter pub get
 
+      - name: Flutter pub get (vpn_plugin)
+        run: |
+          cd plugins/vpn_plugin
+          flutter pub get
+
+      - name: Generate Pigeon bindings
+        run: |
+          cd plugins/vpn_plugin
+          dart run pigeon --input pigeons/platform_api.dart
+
       - name: Generate localizations
         env:
           GPR_KEY: ${{ secrets.GPR_KEY }}
