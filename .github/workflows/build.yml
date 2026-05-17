@@ -26,8 +26,8 @@ jobs:
 
       - name: Decode keystore
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | tr -d '\n' | base64 -d > android/app/keystore.jks
-
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/keystore.jks
+          chmod 600 android/app/keystore.jks
       - name: Flutter pub get
         env:
           GPR_KEY: ${{ secrets.GPR_KEY }}
