@@ -36,7 +36,9 @@ jobs:
         run: flutter pub get
 
       - name: Generate localizations
-        run: flutter gen-l10n
+        env:
+          GPR_KEY: ${{ secrets.GPR_KEY }}
+        run: dart run intl_utils:generate
 
       - name: Run build_runner
         env:
