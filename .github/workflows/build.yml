@@ -1,25 +1,22 @@
 name: Build TrustTunnel APK
 
 on:
-  workflow_dispatch:  # запуск вручную кнопкой
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Получаем код
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. Java 17
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      # 3. Flutter 3.38.3 (точная версия из pubspec.yaml)
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -27,19 +24,23 @@ jobs:
           channel: stable
           cache: true
 
-      # 4. Декодируем keystore из секрета
       - name: Decode keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/keystore.jks
 
-      # 5. Получаем зависимости
-      #    GPR_KEY — GitHub Personal Access Token с правом read:packages
       - name: Flutter pub get
         env:
           GPR_KEY: ${{ secrets.GPR_KEY }}
         run: flutter pub get
 
-      # 6. Сборка release APK
+      - name: Generate localizations
+        run: flutter gen-l10n
+
+      - name: Run build_runner
+        env:
+          GPR_KEY: ${{ secrets.GPR_KEY }}
+        run: dart run build_runner build --delete-conflicting-outputs
+
       - name: Build APK
         env:
           GPR_KEY: ${{ secrets.GPR_KEY }}
@@ -51,11 +52,9 @@ jobs:
             -P signingConfigKeyStorePath=keystore.jks \
             -P signingConfigKeyStorePassword=${{ secrets.STORE_PASSWORD }}
 
-      # 7. Выкладываем APK как артефакт (скачать 90 дней)
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: trusttunnel-dark-release
           path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 90
-
