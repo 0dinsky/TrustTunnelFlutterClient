@@ -12,6 +12,8 @@ import 'package:trusttunnel/feature/server/servers/widget/servers_empty_placehol
 import 'package:trusttunnel/widgets/buttons/custom_floating_action_button.dart';
 import 'package:trusttunnel/widgets/common/scaffold_messenger_provider.dart';
 import 'package:trusttunnel/widgets/custom_app_bar.dart';
+import 'package:trusttunnel/feature/server/servers/widget/tt_import_dialog.dart';
+
 import 'package:trusttunnel/widgets/scaffold_wrapper.dart';
 
 class ServersScreenView extends StatefulWidget {
@@ -63,6 +65,13 @@ class _ServersScreenViewState extends State<ServersScreenView> {
       child: Scaffold(
         appBar: CustomAppBar(
           title: context.ln.servers,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.link),
+              tooltip: 'Импорт tt://',
+              onPressed: () => _showTtImportDialog(context),
+            ),
+          ],
         ),
         body: _servers.isEmpty
             ? const ServersEmptyPlaceholder()
@@ -92,9 +101,24 @@ class _ServersScreenViewState extends State<ServersScreenView> {
     ),
   );
 
+  void _showTtImportDialog(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (_) => TtImportDialog(
+        onImport: (link) {
+          final uri = Uri.tryParse(link.trim());
+          if (uri != null && uri.scheme == 'tt') {
+            _pushServerDetailsScreen(context, deepLinkUri: uri);
+          }
+        },
+      ),
+    );
+  }
+
   void _pushServerDetailsScreen(
     BuildContext context, {
     ServerData? preloadedData,
+    Uri? deepLinkUri,
   }) async {
     final controller = ServersScope.controllerOf(context, listen: false);
     final Widget serverDetailsScreen;
@@ -103,6 +127,22 @@ class _ServersScreenViewState extends State<ServersScreenView> {
       serverDetailsScreen = ServerDetailsPopUp.preloaded(
         preloadedData: preloadedData,
       );
+    } else if (deepLinkUri != null) {
+      // Парсим ссылку через DeepLinkController
+      final controller = ServersScope.controllerOf(context, listen: false);
+      try {
+        final parsed = await context.repositoryFactory.deepLinkRepository.parseDataFromLink(
+          deepLink: deepLinkUri.toString(),
+        );
+        serverDetailsScreen = ServerDetailsPopUp.preloaded(preloadedData: parsed);
+      } catch (e) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Ошибка разбора ссылки: $e')),
+          );
+        }
+        return;
+      }
     } else {
       serverDetailsScreen = const ServerDetailsPopUp();
     }

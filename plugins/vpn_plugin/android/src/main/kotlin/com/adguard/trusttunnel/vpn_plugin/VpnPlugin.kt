@@ -124,4 +124,8 @@ class VpnPlugin :
     override fun getCurrentState(): VpnManagerState {
         return vpnImpl.getCurrentState()
     }
+
+    override fun setSpeedNotificationEnabled(enabled: Boolean) {
+        vpnImpl.setSpeedNotificationEnabled(enabled)
+    }
 }

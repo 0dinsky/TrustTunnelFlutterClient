@@ -26,6 +26,8 @@ abstract class VpnRepository {
   Future<VpnState> requestState();
 
   Future<void> stop();
+
+  Future<void> setSpeedNotificationEnabled({required bool enabled});
 }
 
 class VpnRepositoryImpl implements VpnRepository {
@@ -52,6 +54,10 @@ class VpnRepositoryImpl implements VpnRepository {
 
   @override
   Future<void> stop() => _vpnDataSource.stop();
+
+  @override
+  Future<void> setSpeedNotificationEnabled({required bool enabled}) =>
+      _vpnDataSource.setSpeedNotificationEnabled(enabled: enabled);
 
   @override
   Future<Stream<VpnLog>> listenToLogs() async => _vpnDataSource.vpnLogs;

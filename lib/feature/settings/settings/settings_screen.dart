@@ -7,6 +7,7 @@ import 'package:trusttunnel/feature/locale/locale_scope.dart';
 import 'package:trusttunnel/feature/settings/excluded_routes/widgets/excluded_routes_screen.dart';
 import 'package:trusttunnel/feature/settings/query_log/widgets/query_log_screen.dart';
 import 'package:trusttunnel/feature/settings/settings_about/about_screen.dart';
+import 'package:trusttunnel/feature/settings/notification_settings.dart';
 import 'package:trusttunnel/feature/theme/theme_scope.dart';
 import 'package:trusttunnel/widgets/common/custom_arrow_list_tile.dart';
 import 'package:trusttunnel/widgets/custom_app_bar.dart';
@@ -32,6 +33,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           const Divider(),
           const _AppearanceSection(),
+          const NotificationTile(),
           const _LanguageTile(),
           const Divider(),
           CustomArrowListTile(

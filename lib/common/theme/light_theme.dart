@@ -5,16 +5,29 @@ import 'package:trusttunnel/common/extensions/theme_extensions.dart';
 import 'package:trusttunnel/widgets/custom_icon.dart';
 
 class LightTheme {
-  static const _accent = Color(0xFF3972AA);
-  static const _accentHover = Color(0xFF336699);
-  static const _accentPressed = Color(0xFF2D5986);
-  static const _accentDisabled = Color(0x664F8AC4);
+  LightTheme({Color accent = const Color(0xFF3972AA)}) : _accent = accent {
+    _accentHover    = Color.lerp(accent, Colors.black, 0.10)!;
+    _accentPressed  = Color.lerp(accent, Colors.black, 0.20)!;
+    _accentDisabled = accent.withValues(alpha: 0.4);
+    _accentAdditional = Color.lerp(accent, Colors.white, 0.2)!;
+    _blend          = accent.withValues(alpha: 0.2);
+    _blendHover     = accent.withValues(alpha: 0.3);
+    _blendPressed   = accent.withValues(alpha: 0.4);
+    // Для светлого текста на кнопках: если акцент светлый — используем чёрный
+    _fabForeground  = ThemeData.estimateBrightnessForColor(accent) == Brightness.light
+        ? const Color(0xFF1A2028)
+        : const Color(0xFFFFFFFF);
+  }
 
-  static const _accentAdditional = Color(0xFF4F8AC4);
-
-  static const _blend = Color(0x334F8AC4);
-  static const _blendHover = Color(0x4D4F8AC4);
-  static const _blendPressed = Color(0x664F8AC4);
+  final Color _accent;
+  late final Color _accentHover;
+  late final Color _accentPressed;
+  late final Color _accentDisabled;
+  late final Color _accentAdditional;
+  late final Color _blend;
+  late final Color _blendHover;
+  late final Color _blendPressed;
+  late final Color _fabForeground;
   static const _attention = Color(0xFFF08400);
   static const _attentionHover = Color(0xFFE07400);
   static const _attentionPressed = Color(0xFFC76300);
@@ -187,8 +200,8 @@ class LightTheme {
 
   late final _floatingActionButtonThemeData = FloatingActionButtonThemeData(
     backgroundColor: _accent,
-    extendedTextStyle: _textTheme.labelLarge?.copyWith(color: _specialStaticWhite),
-    foregroundColor: _specialStaticWhite,
+    extendedTextStyle: _textTheme.labelLarge?.copyWith(color: _fabForeground),
+    foregroundColor: _fabForeground,
     iconSize: 24,
     extendedSizeConstraints: const BoxConstraints(minHeight: 56),
     smallSizeConstraints: const BoxConstraints(minHeight: 40, minWidth: 40),

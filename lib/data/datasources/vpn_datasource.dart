@@ -101,6 +101,8 @@ abstract class VpnDataSource {
   /// {@endtemplate}
   Future<void> stop();
 
+  Future<void> setSpeedNotificationEnabled({required bool enabled});
+
   /// {@template vpn_data_source_request_state}
   /// Requests the current VPN state from the backend.
   ///

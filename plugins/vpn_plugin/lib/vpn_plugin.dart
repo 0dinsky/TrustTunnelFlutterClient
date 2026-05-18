@@ -129,6 +129,10 @@ class VpnPluginImpl implements VpnPlugin {
   @override
   Stream<VpnManagerState> get states => _vpnChannel.receiveBroadcastStream().map(_mapNativeToState).distinct();
 
+  @override
+  Future<void> setSpeedNotificationEnabled({required bool enabled}) =>
+      _api.setSpeedNotificationEnabled(enabled: enabled);
+
   /// {@macro vpn_plugin_query_log}
   @override
   Stream<QueryLogRow> get queryLog => _queryLogChannel.receiveBroadcastStream().map(

@@ -288,6 +288,8 @@ class ServerDataSourceImpl implements ServerDataSource {
               data: configuration.endpoint.certificate,
             ),
       customSni: configuration.endpoint.customSni,
+      skipCertVerification: configuration.endpoint.skipVerification,
+      antiDpi: configuration.endpoint.antiDpi,
     );
   }
 

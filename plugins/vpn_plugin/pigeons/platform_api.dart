@@ -110,6 +110,13 @@ abstract class IVpnManager {
   /// - diagnose platform-side lifecycle issues.
   /// {@endtemplate}
   VpnManagerState getCurrentState();
+
+  /// Enables or disables the speed notification.
+  ///
+  /// When [enabled] is true and the VPN is connected, a persistent
+  /// notification showing upload/download speed will be displayed.
+  /// The notification includes a "Disconnect" button.
+  void setSpeedNotificationEnabled({required bool enabled});
 }
 
 /// {@template vpn_manager_state}

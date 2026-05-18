@@ -6,6 +6,7 @@ import 'package:trusttunnel/common/extensions/context_extensions.dart';
 import 'package:trusttunnel/common/localization/localization.dart';
 import 'package:trusttunnel/common/theme/amoled_theme.dart';
 import 'package:trusttunnel/common/theme/dark_theme.dart';
+import 'package:trusttunnel/common/theme/light_theme.dart';
 import 'package:trusttunnel/feature/locale/locale_scope.dart';
 import 'package:trusttunnel/feature/navigation/navigation_screen.dart';
 import 'package:trusttunnel/feature/theme/theme_scope.dart';

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trusttunnel/data/model/routing_profile.dart';
 import 'package:trusttunnel/data/model/server.dart';
 import 'package:trusttunnel/data/model/vpn_log.dart';
@@ -228,7 +229,14 @@ class _VpnScopeState extends State<VpnScope> {
     required List<String> excludedRoutes,
   }) async {
     await _stop();
-    
+
+    // Применить настройку уведомления со скоростью
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final speedEnabled = prefs.getBool('speed_notification_enabled') ?? false;
+      await widget.vpnRepository.setSpeedNotificationEnabled(enabled: speedEnabled);
+    } catch (_) {}
+
     final newServerStream = await widget.vpnRepository.startListenToStates(
       server: server,
       routingProfile: routingProfile,

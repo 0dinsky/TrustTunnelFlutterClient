@@ -1,4 +1,3 @@
-// plugins/vpn_plugin/android/src/main/kotlin/com/adguard/trusttunnel/vpn_plugin/NativeVpnImpl.kt
 package com.adguard.trusttunnel.vpn_plugin
 
 import android.content.Context
@@ -22,6 +21,10 @@ class NativeVpnImpl(
 
     val queryLogHandler: QueryLogStreamHandler = QueryLogStreamHandler()
 
+    // Уведомление со скоростью
+    private val speedNotification = SpeedNotificationManager(appContext)
+    private var speedNotificationEnabled = false
+
     init {
         VpnService.startNetworkManager(appContext)
         val queryLogFile = File(appContext.filesDir, "query_log.dat")
@@ -35,7 +38,17 @@ class NativeVpnImpl(
 
     fun stop() {
         Log.i("VPN_PLUGIN", "stop()")
+        speedNotification.stop()
         VpnService.stop(appContext)
+    }
+
+    fun setSpeedNotificationEnabled(enabled: Boolean) {
+        speedNotificationEnabled = enabled
+        if (!enabled) {
+            speedNotification.stop()
+        } else if (currentState == VpnManagerState.CONNECTED) {
+            startSpeedNotification()
+        }
     }
 
     fun getCurrentState(): VpnManagerState = currentState
@@ -59,11 +72,31 @@ class NativeVpnImpl(
         Log.i("VPN_PLUGIN", "onStateChanged($state)")
         currentState = VpnManagerState.entries[state]
         postEvent(state)
+
+        // Управление уведомлением
+        main.post {
+            when (currentState) {
+                VpnManagerState.CONNECTED -> {
+                    if (speedNotificationEnabled) startSpeedNotification()
+                }
+                VpnManagerState.DISCONNECTED -> {
+                    speedNotification.stop()
+                }
+                else -> {}
+            }
+        }
     }
 
     override fun onConnectionInfo(info: String) {
         Log.i("VPN_PLUGIN", "onConnectionInfo")
         queryLogHandler.onQueryLog(info)
+    }
+
+    private fun startSpeedNotification() {
+        speedNotification.start {
+            // Кнопка «Отключить» в уведомлении
+            stop()
+        }
     }
 
     private fun postEvent(value: Any) {
