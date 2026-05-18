@@ -236,22 +236,8 @@ class DarkTheme {
       },
     ),
     overlayColor: const WidgetStatePropertyAll(_staticTransparent),
-    trackOutlineWidth: WidgetStateProperty.resolveWith(
-      (states) {
-        if (!states.contains(WidgetState.selected)) return 2;
-        return 0;
-      },
-    ),
-    trackOutlineColor: WidgetStateProperty.resolveWith(
-      (states) {
-        if (states.contains(WidgetState.selected)) return null;
-        if (states.contains(WidgetState.hovered) ||
-            states.contains(WidgetState.focused) ||
-            states.contains(WidgetState.disabled))
-          return _neutralDark;
-        return _neutralBlack;
-      },
-    ),
+    
+    
   );
 
   late final _snackBarThemeData = SnackBarThemeData(
@@ -826,8 +812,6 @@ class DarkTheme {
       fontFamily: FontFamilies.roboto,
       leadingDistribution: TextLeadingDistribution.even,
     ),
-    displayColor: Colors.white,
-      bodyColor: Colors.white,
       bodyMedium: TextStyle(
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
