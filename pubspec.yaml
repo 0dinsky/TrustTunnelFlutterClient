@@ -25,7 +25,7 @@ build_channel: Release
 
 environment:
   flutter: 3.44.0
-  sdk: 3.10.1
+  sdk: 3.12.0
 
 dependencies:
   drift: 2.30.0
