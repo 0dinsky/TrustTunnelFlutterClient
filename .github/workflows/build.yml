@@ -37,7 +37,7 @@ jobs:
           sdkmanager \
             "platforms;android-36" \
             "build-tools;36.0.0" \
-            "ndk;28.2.13433240"
+            "ndk;29.0.14206865"
 
       - name: Decode keystore
         run: |
