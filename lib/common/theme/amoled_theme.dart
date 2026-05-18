@@ -217,6 +217,15 @@ class AmoledTheme {
         return _accent;
       },
     ),
+    trackOutlineColor: WidgetStateProperty.resolveWith(
+      (states) {
+        if (states.contains(WidgetState.selected)) {
+          return Colors.black.withValues(alpha: 0.55);
+        }
+        return Colors.transparent;
+      },
+    ),
+    trackOutlineWidth: WidgetStateProperty.all(1.6),
     thumbColor: WidgetStateProperty.resolveWith(
       (states) {
         if (states.contains(WidgetState.selected)) return _specialStaticWhite;
@@ -817,7 +826,9 @@ class AmoledTheme {
       fontFamily: FontFamilies.roboto,
       leadingDistribution: TextLeadingDistribution.even,
     ),
-    bodyMedium: TextStyle(
+    displayColor: Colors.white,
+      bodyColor: Colors.white,
+      bodyMedium: TextStyle(
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
       color: _neutralBlack,
