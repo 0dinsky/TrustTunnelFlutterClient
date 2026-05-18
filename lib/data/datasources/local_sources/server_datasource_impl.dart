@@ -200,6 +200,8 @@ class ServerDataSourceImpl implements ServerDataSource {
         ipv6Enabled: Value(request.ipv6),
         tlsPrefix: Value(request.tlsPrefix),
         customSni: Value(request.customSni),
+        skipCertVerification: Value(request.skipCertVerification),
+        antiDpi: Value(request.antiDpi),
       ),
     );
 
