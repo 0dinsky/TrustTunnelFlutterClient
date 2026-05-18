@@ -268,6 +268,26 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
               enableIpv6: value,
             ),
           ),
+          CheckboxListTile(
+            value: _formData.skipCertVerification,
+            title: const Text('Пропустить проверку сертификата'),
+            subtitle: const Text('Небезопасно — только для тестирования'),
+            contentPadding: const EdgeInsets.all(4),
+            onChanged: (value) => _onDataChanged(
+              context,
+              skipCertVerification: value ?? false,
+            ),
+          ),
+          CheckboxListTile(
+            value: _formData.antiDpi,
+            title: const Text('Anti-DPI'),
+            subtitle: const Text('Фрагментация TLS ClientHello для обхода DPI'),
+            contentPadding: const EdgeInsets.all(4),
+            onChanged: (value) => _onDataChanged(
+              context,
+              antiDpi: value ?? false,
+            ),
+          ),
         ],
       ),
     );
@@ -298,6 +318,8 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
     String? routingProfileId,
     List<String>? dnsServers,
     ValueData<String>? customSni,
+    bool? skipCertVerification,
+    bool? antiDpi,
   }) =>
       ServerDetailsScope.controllerOf(
         context,
@@ -314,5 +336,7 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
         routingProfileId: routingProfileId,
         dnsServers: dnsServers,
         customSni: customSni,
+        skipCertVerification: skipCertVerification,
+        antiDpi: antiDpi,
       );
 }

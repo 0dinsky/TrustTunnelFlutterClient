@@ -49,6 +49,8 @@ class ServerDataSourceImpl implements ServerDataSource {
           request.routingProfileId,
         ),
         customSni: Value(request.customSni),
+        skipCertVerification: Value(request.skipCertVerification),
+        antiDpi: Value(request.antiDpi),
       ),
     );
 
@@ -82,6 +84,8 @@ class ServerDataSourceImpl implements ServerDataSource {
         certificate: request.certificate,
         tlsPrefix: request.tlsPrefix,
         customSni: request.customSni,
+        skipCertVerification: request.skipCertVerification,
+        antiDpi: request.antiDpi,
       ),
     );
   }
@@ -133,6 +137,8 @@ class ServerDataSourceImpl implements ServerDataSource {
             ipv6: e.ipv6Enabled,
             selected: e.selected,
             customSni: e.customSni,
+            skipCertVerification: e.skipCertVerification,
+            antiDpi: e.antiDpi,
           ),
         );
       },
@@ -245,6 +251,8 @@ class ServerDataSourceImpl implements ServerDataSource {
         tlsPrefix: server.tlsPrefix,
         certificate: cert == null ? null : _parseCert(cert),
         customSni: server.customSni,
+        skipCertVerification: server.skipCertVerification,
+        antiDpi: server.antiDpi,
       ),
     );
   }

@@ -33,7 +33,7 @@ allprojects {
         maven {
             url = uri("https://maven.pkg.github.com/TrustTunnel/TrustTunnelClient")
             credentials {
-                username = ""
+                username = project.findProperty("gpr.user") ?: "x"
                 password = getGprProp("gpr.key")
             }
         }

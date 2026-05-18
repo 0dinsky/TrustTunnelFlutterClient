@@ -52,6 +52,12 @@ class ServerData {
 
   final String? customSni;
 
+  /// Skip TLS certificate verification.
+  final bool skipCertVerification;
+
+  /// Enable Anti-DPI mode (TLS fragmentation / randomized hello).
+  final bool antiDpi;
+
   /// {@macro server}
   const ServerData({
     required this.name,
@@ -66,6 +72,8 @@ class ServerData {
     this.certificate,
     this.tlsPrefix,
     this.customSni,
+    this.skipCertVerification = false,
+    this.antiDpi = false,
     this.selected = false,
   });
 
@@ -82,6 +90,8 @@ class ServerData {
     this.certificate,
     this.tlsPrefix,
     this.customSni,
+    this.skipCertVerification = false,
+    this.antiDpi = false,
     this.selected = false,
   });
 
@@ -100,6 +110,8 @@ class ServerData {
     ipv6,
     tlsPrefix,
     customSni,
+    skipCertVerification,
+    antiDpi,
   );
 
   @override
@@ -117,6 +129,8 @@ class ServerData {
       'ipv6: $ipv6,'
       'tlsPrefix: $tlsPrefix,'
       'certificate: $certificate,'
+      'skipCertVerification: $skipCertVerification,'
+      'antiDpi: $antiDpi,'
       ')';
 
   @override
@@ -136,7 +150,9 @@ class ServerData {
         other.ipv6 == ipv6 &&
         other.tlsPrefix == tlsPrefix &&
         other.certificate == certificate &&
-        other.customSni == customSni;
+        other.customSni == customSni &&
+        other.skipCertVerification == skipCertVerification &&
+        other.antiDpi == antiDpi;
   }
 
   /// Creates a copy of this server with the given fields replaced.
@@ -156,6 +172,8 @@ class ServerData {
     ValueData<Certificate>? certificate,
     ValueData<String>? tlsPrefix,
     ValueData<String>? customSni,
+    bool? skipCertVerification,
+    bool? antiDpi,
   }) => ServerData(
     name: name ?? this.name,
     ipAddress: ipAddress ?? this.ipAddress,
@@ -170,5 +188,7 @@ class ServerData {
     certificate: certificate != null ? certificate.value : this.certificate,
     tlsPrefix: tlsPrefix != null ? tlsPrefix.value : this.tlsPrefix,
     customSni: customSni != null ? customSni.value : this.customSni,
+    skipCertVerification: skipCertVerification ?? this.skipCertVerification,
+    antiDpi: antiDpi ?? this.antiDpi,
   );
 }

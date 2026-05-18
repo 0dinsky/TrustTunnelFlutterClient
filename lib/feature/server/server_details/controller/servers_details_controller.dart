@@ -152,6 +152,8 @@ final class ServerDetailsController extends BaseStateController<ServerDetailsSta
     List<String>? dnsServers,
     ValueData<String>? clientRandom,
     ValueData<String>? customSni,
+    bool? skipCertVerification,
+    bool? antiDpi,
   }) => handle(() {
     setState(
       ServerDetailsState.idle(
@@ -170,6 +172,8 @@ final class ServerDetailsController extends BaseStateController<ServerDetailsSta
           ipv6: enableIpv6 ?? state.data.ipv6,
           tlsPrefix: clientRandom == null ? null : ValueData(clientRandom.value?.trim()),
           customSni: customSni == null ? null : ValueData(customSni.value?.trim()),
+          skipCertVerification: skipCertVerification ?? state.data.skipCertVerification,
+          antiDpi: antiDpi ?? state.data.antiDpi,
         ),
       ),
     );
@@ -189,6 +193,8 @@ final class ServerDetailsController extends BaseStateController<ServerDetailsSta
             ipv6: state.data.ipv6,
             tlsPrefix: ValueData(state.data.tlsPrefix?.trim()),
             customSni: ValueData(state.data.customSni?.trim()),
+            skipCertVerification: state.data.skipCertVerification,
+            antiDpi: state.data.antiDpi,
           ),
           initialData: state.initialData,
           fieldErrors: state.fieldErrors,

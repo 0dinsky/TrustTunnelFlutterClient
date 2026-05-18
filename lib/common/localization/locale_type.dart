@@ -4,13 +4,7 @@ import 'package:flutter/widgets.dart';
 enum LocaleType {
   system(null),
   en(Locale('en', 'GB')),
-  de(Locale('de')),
-  fr(Locale('fr')),
-  it(Locale('it')),
-  ru(Locale('ru')),
-  ja(Locale('ja')),
-  zh(Locale('zh')),
-  ko(Locale('ko'));
+  ru(Locale('ru'));
 
   final Locale? value;
 

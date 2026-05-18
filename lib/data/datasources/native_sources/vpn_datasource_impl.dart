@@ -94,6 +94,8 @@ class VpnDataSourceImpl implements VpnDataSource {
       certificate: server.certificate?.data ?? '',
       clientRandom: server.tlsPrefix ?? '',
       customSni: server.customSni ?? '',
+      skipVerification: server.skipCertVerification,
+      antiDpi: server.antiDpi,
       username: server.username,
       password: server.password,
       addresses: [
@@ -159,6 +161,8 @@ class VpnDataSourceImpl implements VpnDataSource {
       customSni: server.customSni ?? '',
       certificate: server.certificate?.data ?? '',
       clientRandom: server.tlsPrefix ?? '',
+      skipVerification: server.skipCertVerification,
+      antiDpi: server.antiDpi,
     );
 
     return _platformApi.updateConfiguration(

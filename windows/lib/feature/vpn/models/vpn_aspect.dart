@@ -1,4 +1,0 @@
-enum VpnAspect {
-  vpn,
-  logs,
-}

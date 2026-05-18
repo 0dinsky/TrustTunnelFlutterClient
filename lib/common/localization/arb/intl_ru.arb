@@ -1,0 +1,134 @@
+{
+  "@@locale": "ru",
+  "language": "Русский",
+  "appTitle": "VPN",
+  "servers": "Серверы",
+  "routing": "Маршрутизация",
+  "settings": "Настройки",
+  "addServer": "Добавить сервер",
+  "add": "Добавить",
+  "editServer": "Редактировать сервер",
+  "serverName": "Название сервера",
+  "username": "Имя пользователя",
+  "enterUsername": "Введите имя пользователя",
+  "password": "Пароль",
+  "enterPassword": "Введите пароль",
+  "protocol": "Протокол",
+  "routingProfile": "Профиль маршрутизации",
+  "enterDnsServerLabel": "Адреса DNS-серверов, по одному на строке",
+  "enterDnsServerHint": "IP-адрес, tls://, https://, quic://, h3:// или sdns://",
+  "enterDnsServerHelper": "Если не указано, используется 46.243.231.30 (AdGuard DNS без фильтрации)",
+  "enterIpAddressLabel": "Адрес",
+  "enterIpAddressHint": "IPv4/IPv6 или домен",
+  "enterIpAddressHelper": "Если порт не указан, используется 443",
+  "enterDomainLabel": "Доменное имя из сертификата сервера",
+  "enterDomainHint": "Домен или IP-адрес",
+  "defaultProfile": "Профиль по умолчанию",
+  "serversEmptyTitle": "Создайте первый сервер",
+  "serversEmptyDescription": "Создайте сервер для безопасной и анонимной передачи данных",
+  "create": "Создать",
+  "save": "Сохранить",
+  "unknownError": "Неизвестная ошибка",
+  "nameAlreadyExistError": "Это имя уже используется",
+  "ipAddressWrongFieldError": "Используйте формат x.x.x.x или x:x:x:x:x:x:x:x",
+  "domainWrongFieldError": "Используйте доменное имя или IP-адрес",
+  "dnsServersWrongFieldError": "Используйте IP-адреса, tls://, https://, quic://, h3:// или sdns://",
+  "urlWrongFieldError": "Проверьте URL: он выглядит некорректно",
+  "pleaseFillField": "Заполните это поле",
+  "editProfileName": "Редактировать название",
+  "deleteProfile": "Удалить профиль",
+  "deleteProfileDialogTitle": "Удалить профиль?",
+  "addProfile": "Добавить профиль",
+  "enterRulesHint": "Правила маршрутизации могут быть следующих типов:\n- Домены любого уровня\n- IP-адрес\n- IP-адрес с портом\n- IP-адрес с маской",
+  "changeDefaultRoutingMode": "Изменить маршрутизацию по умолчанию",
+  "deleteAllRules": "Удалить все правила",
+  "deleteAllRulesDialogTitle": "Удалить все правила?",
+  "cancel": "Отмена",
+  "delete": "Удалить",
+  "deleteAllRulesDialogDescription": "Все правила из {profileName} будут удалены",
+  "@deleteAllRulesDialogDescription": {
+    "placeholders": {
+      "profileName": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileDescription": "{profileName} будет удалён",
+  "@deleteProfileDescription": {
+    "placeholders": {
+      "profileName": {
+        "type": "String"
+      }
+    }
+  },
+  "changeDefaultRoutingModeDialogDescription": "Весь трафик будет направляться по умолчанию согласно этому правилу",
+  "discardChanges": "Отменить изменения",
+  "discardChangesDialogTitle": "Отменить изменения?",
+  "discardChangesDialogDescription": "Вы уверены, что хотите отменить все изменения?",
+  "about": "О приложении",
+  "queryLog": "Журнал запросов",
+  "excludedRoutes": "Исключённые маршруты",
+  "followUsOnGithub": "Мы на Github",
+  "typeSomething": "Начните вводить",
+  "deleteServer": "Удалить сервер",
+  "deleteServerDialogTitle": "Удалить сервер?",
+  "deleteServerDescription": "Сервер <b>{serverName}</b> будет удалён",
+  "@deleteServerDescription": {
+    "placeholders": {
+      "serverName": {
+        "type": "String"
+      }
+    }
+  },
+  "serverDeletedSnackbar": "Сервер <b>{serverName}</b> удалён",
+  "@serverDeletedSnackbar": {
+    "placeholders": {
+      "serverName": {
+        "type": "String"
+      }
+    }
+  },
+  "profileDeletedSnackbar": "Профиль <b>{profileName}</b> удалён",
+  "@profileDeletedSnackbar": {
+    "placeholders": {
+      "profileName": {
+        "type": "String"
+      }
+    }
+  },
+  "changesSavedSnackbar": "Изменения сохранены",
+  "serverCreatedSnackbar": "Сервер <b>{serverName}</b> создан",
+  "@serverCreatedSnackbar": {
+    "placeholders": {
+      "serverName": {
+        "type": "String"
+      }
+    }
+  },
+  "profileCreatedSnackbar": "Профиль <b>{profileName}</b> создан",
+  "@profileCreatedSnackbar": {
+    "placeholders": {
+      "profileName": {
+        "type": "String"
+      }
+    }
+  },
+  "allRulesDeleted": "Все правила удалены",
+  "quic": "QUIC",
+  "http2": "HTTP/2",
+  "bypass": "Обход",
+  "vpn": "VPN",
+  "profileNameLabel": "Название профиля",
+  "customSniLabel": "Пользовательский SNI",
+  "customSniHint": "example.com",
+  "customSniWrongFieldError": "Используйте формат example.com",
+  "clientRandomLabel": "Client Random, шестнадцатеричная последовательность",
+  "clientRandomHint": "abcdef, 0a0b0c/0f0f0f",
+  "clientRandomHelper": "Максимальная длина — 64 символа",
+  "pemLabel": "Самоподписанный сертификат, PEM-файл",
+  "ipv6Label": "Разрешить IPv6-соединения через сервер",
+  "tlsOutOfBoundsError": "Маска и значение должны иметь одинаковую длину",
+  "tlsWrongFieldError": "Шестнадцатеричная последовательность допускает только символы 0-9, a-f",
+  "tlsWrongValueError": "Значение должно содержать чётное количество символов",
+  "tlsWrongMaskError": "Маска и значение должны содержать чётное количество символов"
+}

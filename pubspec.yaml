@@ -46,6 +46,8 @@ dependencies:
   rxdart: 0.28.0
   sqlite3_flutter_libs: 0.5.41
   url_launcher: 6.3.2
+  shared_preferences: ^2.3.0
+  dynamic_color: ^1.7.0
   vpn_plugin:
     path: plugins/vpn_plugin
 

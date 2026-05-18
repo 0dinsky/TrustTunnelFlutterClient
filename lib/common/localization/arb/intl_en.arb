@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+  "language": "English",
   "appTitle": "Vpn",
   "servers": "Servers",
   "routing": "Routing",

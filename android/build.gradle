@@ -18,7 +18,7 @@ allprojects {
         maven {
             url = uri("https://maven.pkg.github.com/TrustTunnel/TrustTunnelClient")
             credentials {
-                username = ""
+                username = getGprProp("gpr.user") ?: "x"
                 password = getGprProp("gpr.key")
             }
             authentication { basic(BasicAuthentication) }

@@ -4,8 +4,8 @@ import 'package:trusttunnel/common/assets/font_families.dart';
 import 'package:trusttunnel/common/extensions/theme_extensions.dart';
 import 'package:trusttunnel/widgets/custom_icon.dart';
 
-class DarkTheme {
-  DarkTheme({Color accent = const Color(0xFF4F8AC4)}) : _accent = accent {
+class AmoledTheme {
+  AmoledTheme({Color accent = const Color(0xFF4F8AC4)}) : _accent = accent {
     _accentHover    = Color.lerp(accent, Colors.black, 0.15)!;
     _accentPressed  = Color.lerp(accent, Colors.black, 0.25)!;
     _accentDisabled = accent.withValues(alpha: 0.4);
@@ -34,14 +34,14 @@ class DarkTheme {
   static const _errorDisabled = Color(0x80F56447);
 
   // Фоны
-  static const _background = Color(0xFF121212);
-  static const _backgroundHover = Color(0xFF1E1E1E);
-  static const _backgroundPressed = Color(0xFF2A2A2A);
-  static const _backgroundAdditional = Color(0xFF1A1A1A);
-  static const _backgroundElevated = Color(0xFF1E1E1E);
-  static const _backgroundSystem = Color(0xFF2C2C2C);
-  static const _backgroundSystemHover = Color(0xFF383838);
-  static const _backgroundSystemPressed = Color(0xFF444444);
+  static const _background = Color(0xFF000000);
+  static const _backgroundHover = Color(0xFF0A0A0A);
+  static const _backgroundPressed = Color(0xFF111111);
+  static const _backgroundAdditional = Color(0xFF050505);
+  static const _backgroundElevated = Color(0xFF0A0A0A);
+  static const _backgroundSystem = Color(0xFF0D0D0D);
+  static const _backgroundSystemHover = Color(0xFF181818);
+  static const _backgroundSystemPressed = Color(0xFF222222);
 
   static const _neutralBlend = Color(0x1AFFFFFF);
 
