@@ -24,7 +24,7 @@ version_titles:
 build_channel: Release
 
 environment:
-  flutter: 3.38.3
+  flutter: 3.44.0
   sdk: 3.10.1
 
 dependencies:
