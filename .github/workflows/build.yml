@@ -2,6 +2,9 @@ name: Build TrustTunnel APK
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -29,6 +32,23 @@ jobs:
           echo "${{ secrets.KEYSTORE_BASE64 }}" \
             | tr -d '[:space:]' \
             | base64 -d > android/keystore.jks
+
+      - name: Check GPR token access
+        run: |
+          HTTP=$(curl -s -o /dev/null -w "%{http_code}" \
+            -u "x:${{ secrets.GPR_KEY }}" \
+            "https://maven.pkg.github.com/TrustTunnel/TrustTunnelClient/com/adguard/trusttunnel/trusttunnel-client-android/maven-metadata.xml")
+          echo "GitHub Packages HTTP: $HTTP"
+          if [ "$HTTP" = "401" ]; then
+            echo "::error::GPR_KEY не имеет доступа к TrustTunnel packages"
+            exit 1
+          fi
+
+      - name: Configure Gradle credentials
+        run: |
+          mkdir -p ~/.gradle
+          printf 'gpr.user=x\ngpr.key=%s\n' "${{ secrets.GPR_KEY }}" \
+            >> ~/.gradle/gradle.properties
 
       - name: Flutter pub get
         env:
@@ -60,15 +80,29 @@ jobs:
           GPR_KEY: ${{ secrets.GPR_KEY }}
         run: |
           flutter build apk --release \
+            --target-platform android-arm64 \
             --dart-define=BUILD_CHANNEL=Release \
             -P signingConfigKeyAlias=${{ secrets.KEY_ALIAS }} \
             -P signingConfigKeyPassword=${{ secrets.KEY_PASSWORD }} \
             -P signingConfigKeyStorePath=keystore.jks \
             -P signingConfigKeyStorePassword=${{ secrets.STORE_PASSWORD }}
 
-      - name: Upload APK
+      - name: Rename APK
+        run: |
+          VERSION=$(grep 'flutter.versionName' android/local.properties | cut -d= -f2 || echo "1.0.0")
+          cp build/app/outputs/flutter-apk/app-release.apk \
+             build/app/outputs/flutter-apk/TrustTunnel-${VERSION}-release.apk
+
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: trusttunnel-dark-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: TrustTunnel-release
+          path: build/app/outputs/flutter-apk/TrustTunnel-*-release.apk
           retention-days: 90
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/app/outputs/flutter-apk/TrustTunnel-*-release.apk
+          generate_release_notes: true
