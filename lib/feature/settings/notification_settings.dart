@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trusttunnel/common/extensions/context_extensions.dart';
+import 'package:trusttunnel/common/localization/localization.dart';
 
 const _kSpeedNotifKey = 'speed_notification_enabled';
 

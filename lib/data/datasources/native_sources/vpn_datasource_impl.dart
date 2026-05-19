@@ -118,6 +118,12 @@ class VpnDataSourceImpl implements VpnDataSource {
           excludedRoutes: excludedRoutes,
           mtuSize: server.mtu ?? 1280,
         ),
+        socks: const Socks(),
+      ),
+    );
+  }
+
+  /// {@macro vpn_data_source_stop}
   @override
   Future<void> stop() => _platformApi.stop();
 
@@ -173,7 +179,14 @@ class VpnDataSourceImpl implements VpnDataSource {
         tun: Tun(
           excludedRoutes: excludedRoutes,
           mtuSize: server.mtu ?? 1280,
-        ), => _platformApi.updateConfiguration(configuration: null);
+        ),
+        socks: const Socks(),
+      ),
+    );
+  }
+
+  @override
+  Future<void> deleteConfiguration() => _platformApi.updateConfiguration(configuration: null);
 
   /// Computes the effective exclusion list based on routing mode.
   ///

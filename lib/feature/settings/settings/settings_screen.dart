@@ -80,7 +80,7 @@ class _AppearanceSection extends StatelessWidget {
               Text(context.ln.themeLabel),
               const Spacer(),
               SegmentedButton<bool>(
-                segments: const [
+                segments: [
                   ButtonSegment(value: false, label: Text(context.ln.themeLight), icon: const Icon(Icons.light_mode, size: 16)),
                   ButtonSegment(value: true,  label: Text(context.ln.themeDark),  icon: const Icon(Icons.dark_mode,  size: 16)),
                 ],
@@ -142,9 +142,9 @@ class _AccentColorPicker extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(children: [
-            Icon(Icons.palette, size: 20),
-            SizedBox(width: 12),
+          Row(children: [
+            const Icon(Icons.palette, size: 20),
+            const SizedBox(width: 12),
             Text(context.ln.accentColorLabel),
           ]),
           const SizedBox(height: 10),
@@ -193,8 +193,8 @@ class _AccentColorPicker extends StatelessWidget {
             scope.accentColor == null
                 ? context.ln.accentColorMaterialYou
                 : isCustom
-                    ? context.ln.accentColorHex(hex: scope.accentColor!.toARGB32().toRadixString(16).substring(2).toUpperCase())
-                    : context.ln.accentColorPreset(hex: scope.accentColor!.toARGB32().toRadixString(16).substring(2).toUpperCase()),
+                    ? context.ln.accentColorHex(scope.accentColor!.toARGB32().toRadixString(16).substring(2).toUpperCase())
+                    : context.ln.accentColorPreset(scope.accentColor!.toARGB32().toRadixString(16).substring(2).toUpperCase()),
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: Theme.of(context).colorScheme.primary,
             ),
