@@ -68,7 +68,7 @@ class LightTheme {
   static const _borderColor = Color(0xFF73859D);
   static const _focusedBorderColor = Color(0xFF74869C);
 
-  late final _customColors = const CustomColors(
+  late final _customColors = CustomColors(
     accent: _accent,
     accentHover: _accentHover,
     accentPressed: _accentPressed,
@@ -495,7 +495,7 @@ class LightTheme {
     foregroundColor: _neutralBlack,
   );
 
-  late final _navigationBarThemeData = const NavigationBarThemeData(
+  late final _navigationBarThemeData = NavigationBarThemeData(
     backgroundColor: _backgroundSystem,
     indicatorColor: _blendHover,
   );
@@ -915,7 +915,7 @@ class LightTheme {
     height: 40,
   );
 
-  final _customFilledIconButtonTheme = CustomFilledIconButtonTheme(
+  late final _customFilledIconButtonTheme = CustomFilledIconButtonTheme(
     iconButton: IconButtonThemeData(
       style: ButtonStyle(
         foregroundColor: const WidgetStatePropertyAll(_specialStaticWhite),

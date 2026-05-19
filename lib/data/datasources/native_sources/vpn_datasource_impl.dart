@@ -126,6 +126,11 @@ class VpnDataSourceImpl implements VpnDataSource {
   @override
   Future<void> stop() => _platformApi.stop();
 
+  @override
+  Future<void> setSpeedNotificationEnabled({required bool enabled}) async {
+    // No-op on platforms that don't support speed notifications.
+  }
+
   /// {@macro vpn_data_source_request_state}
   ///
   /// The platform state is converted into a domain [VpnState].
