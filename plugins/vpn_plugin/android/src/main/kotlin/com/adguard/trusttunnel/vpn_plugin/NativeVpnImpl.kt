@@ -84,9 +84,7 @@ class NativeVpnImpl(
                 VpnManagerState.CONNECTED -> {
                     if (speedNotificationEnabled) startSpeedNotification()
                     // Откладываем отмену foreground-уведомления библиотеки
-                    main.postDelayed({ cancelForegroundServiceNotification() }, 300)
-                    main.postDelayed({ cancelForegroundServiceNotification() }, 1500)
-                    main.postDelayed({ cancelForegroundServiceNotification() }, 3000)
+                    main.postDelayed({ cancelForegroundServiceNotification() }, 800)
                 }
                 VpnManagerState.DISCONNECTED -> {
                     speedNotification.stop()
@@ -117,7 +115,18 @@ class NativeVpnImpl(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
                 for (sbn in notifManager.activeNotifications) {
-                    if (sbn.notification.channelId != SpeedNotificationManager.CHANNEL_ID) {
+                    val channelId = sbn.notification.channelId ?: ""
+                    val title = sbn.notification.extras?.getCharSequence("android.title")?.toString() ?: ""
+                    val text = sbn.notification.extras?.getCharSequence("android.text")?.toString() ?: ""
+
+                    val isSpeedNotification = channelId == SpeedNotificationManager.CHANNEL_ID
+
+                    val isForegroundVpnNotification =
+                        title.contains("TrustTunnel", ignoreCase = true) ||
+                        text.contains("running in foreground", ignoreCase = true) ||
+                        text.contains("VPN", ignoreCase = true)
+
+                    if (!isSpeedNotification && isForegroundVpnNotification) {
                         notifManager.cancel(sbn.tag, sbn.id)
                     }
                 }

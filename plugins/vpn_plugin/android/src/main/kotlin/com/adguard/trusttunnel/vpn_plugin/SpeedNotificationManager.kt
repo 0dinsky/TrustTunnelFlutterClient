@@ -108,11 +108,8 @@ class SpeedNotificationManager(private val context: Context) {
 
     private fun buildNotification(speedText: String): Notification {
         val stopIntent = PendingIntent.getBroadcast(
-            context,
-            0,
-            Intent(ACTION_STOP).apply {
-                `package` = context.packageName
-            },
+            context, 0,
+            Intent(ACTION_STOP),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
 
@@ -130,7 +127,6 @@ class SpeedNotificationManager(private val context: Context) {
             .setContentTitle("TrustTunnel VPN")
             .setContentText(speedText)
             .setOngoing(true)
-            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
             .setSilent(true)
             .setOnlyAlertOnce(true)
             .setContentIntent(contentIntent)
