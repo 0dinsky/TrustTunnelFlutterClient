@@ -54,6 +54,8 @@ class ServerDataSourceImpl implements ServerDataSource {
         mtuSize: Value(request.mtu),
       ),
     );
+
+    await database.dnsServers.insertAll(
       request.dnsServers.map(
         (s) => db.DnsServersCompanion.insert(
           serverId: id,
