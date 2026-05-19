@@ -3,8 +3,7 @@ name: Build TrustTunnel APK
 on:
   workflow_dispatch:
   push:
-    tags:
-      - 'v*'
+
 
 jobs:
   build:
