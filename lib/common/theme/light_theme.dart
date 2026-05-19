@@ -240,7 +240,7 @@ class LightTheme {
     trackOutlineWidth: WidgetStateProperty.all(1.6),
     thumbColor: WidgetStateProperty.resolveWith(
       (states) {
-        if (states.contains(WidgetState.selected)) return _specialStaticWhite;
+        if (states.contains(WidgetState.selected)) return _fabForeground;
         if (states.contains(WidgetState.disabled)) return _neutralDarkDisabled.withValues(alpha: 0.3);
         if (states.contains(WidgetState.pressed)) return _neutralDarkPressed;
         if (states.contains(WidgetState.hovered) || states.contains(WidgetState.focused)) return _neutralDark;

@@ -13,6 +13,10 @@ class AmoledTheme {
     _blend          = accent.withValues(alpha: 0.2);
     _blendHover     = accent.withValues(alpha: 0.3);
     _blendPressed   = accent.withValues(alpha: 0.4);
+    // Контрастный цвет поверх акцента (для FAB иконки и thumb переключателя)
+    _fabForeground  = ThemeData.estimateBrightnessForColor(accent) == Brightness.light
+        ? const Color(0xFF0D0D0D)
+        : const Color(0xFFFFFFFF);
   }
 
   final Color _accent;
@@ -23,6 +27,7 @@ class AmoledTheme {
   late final Color _blend;
   late final Color _blendHover;
   late final Color _blendPressed;
+  late final Color _fabForeground;
 
   static const _attention = Color(0xFFFFA424);
   static const _attentionHover = Color(0xFFF08400);
@@ -189,8 +194,8 @@ class AmoledTheme {
 
   late final _floatingActionButtonThemeData = FloatingActionButtonThemeData(
     backgroundColor: _accent,
-    extendedTextStyle: _textTheme.labelLarge?.copyWith(color: _specialStaticWhite),
-    foregroundColor: _specialStaticWhite,
+    extendedTextStyle: _textTheme.labelLarge?.copyWith(color: _fabForeground),
+    foregroundColor: _fabForeground,
     iconSize: 24,
     extendedSizeConstraints: const BoxConstraints(minHeight: 56),
     smallSizeConstraints: const BoxConstraints(minHeight: 40, minWidth: 40),
@@ -228,7 +233,7 @@ class AmoledTheme {
     trackOutlineWidth: WidgetStateProperty.all(1.6),
     thumbColor: WidgetStateProperty.resolveWith(
       (states) {
-        if (states.contains(WidgetState.selected)) return _specialStaticWhite;
+        if (states.contains(WidgetState.selected)) return _fabForeground;
         if (states.contains(WidgetState.disabled)) return _neutralDarkDisabled.withValues(alpha: 0.3);
         if (states.contains(WidgetState.pressed)) return _neutralDarkPressed;
         if (states.contains(WidgetState.hovered) || states.contains(WidgetState.focused)) return _neutralDark;

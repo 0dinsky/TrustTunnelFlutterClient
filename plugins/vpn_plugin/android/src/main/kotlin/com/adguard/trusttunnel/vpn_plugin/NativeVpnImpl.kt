@@ -1,8 +1,10 @@
 package com.adguard.trusttunnel.vpn_plugin
 
+import android.app.NotificationManager
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.os.Build
 import android.util.Log
 import java.util.ArrayDeque
 import java.util.Queue
@@ -24,6 +26,9 @@ class NativeVpnImpl(
     // Уведомление со скоростью
     private val speedNotification = SpeedNotificationManager(appContext)
     private var speedNotificationEnabled = false
+
+    private val notifManager =
+        appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     init {
         VpnService.startNetworkManager(appContext)
@@ -78,6 +83,8 @@ class NativeVpnImpl(
             when (currentState) {
                 VpnManagerState.CONNECTED -> {
                     if (speedNotificationEnabled) startSpeedNotification()
+                    // Откладываем отмену foreground-уведомления библиотеки
+                    main.postDelayed({ cancelForegroundServiceNotification() }, 800)
                 }
                 VpnManagerState.DISCONNECTED -> {
                     speedNotification.stop()
@@ -96,6 +103,25 @@ class NativeVpnImpl(
         speedNotification.start {
             // Кнопка «Отключить» в уведомлении
             stop()
+        }
+    }
+
+    /**
+     * Отменяет foreground-уведомление «is running in foreground», показываемое
+     * библиотекой trusttunnel-client-android. Наше уведомление скорости
+     * (канал tt_speed_channel) при этом не трогается.
+     */
+    private fun cancelForegroundServiceNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                for (sbn in notifManager.activeNotifications) {
+                    if (sbn.notification.channelId != SpeedNotificationManager.CHANNEL_ID) {
+                        notifManager.cancel(sbn.tag, sbn.id)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.w("VPN_PLUGIN", "cancelForegroundServiceNotification failed", e)
+            }
         }
     }
 
