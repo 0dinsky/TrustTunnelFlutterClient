@@ -78,6 +78,12 @@ class NativeVpnImpl(
             when (currentState) {
                 VpnManagerState.CONNECTED -> {
                     if (speedNotificationEnabled) startSpeedNotification()
+                    // Серия попыток отмены foreground-уведомления библиотеки:
+                    // библиотека может пересоздать его после первой отмены,
+                    // поэтому повторяем несколько раз с нарастающей задержкой.
+                    for (delayMs in longArrayOf(300, 700, 1500, 3000, 5000)) {
+                        main.postDelayed({ cancelForegroundServiceNotification() }, delayMs)
+                    }
                 }
                 VpnManagerState.DISCONNECTED -> {
                     speedNotification.stop()
@@ -94,7 +100,6 @@ class NativeVpnImpl(
 
     private fun startSpeedNotification() {
         speedNotification.start {
-            // Кнопка «Отключить» в уведомлении
             stop()
         }
     }
