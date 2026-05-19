@@ -83,8 +83,12 @@ class NativeVpnImpl(
             when (currentState) {
                 VpnManagerState.CONNECTED -> {
                     if (speedNotificationEnabled) startSpeedNotification()
-                    // Откладываем отмену foreground-уведомления библиотеки
-                    main.postDelayed({ cancelForegroundServiceNotification() }, 800)
+                    // Серия попыток отмены foreground-уведомления библиотеки:
+                    // библиотека может пересоздать его после первой отмены,
+                    // поэтому повторяем несколько раз с нарастающей задержкой.
+                    for (delayMs in longArrayOf(300, 700, 1500, 3000, 5000)) {
+                        main.postDelayed({ cancelForegroundServiceNotification() }, delayMs)
+                    }
                 }
                 VpnManagerState.DISCONNECTED -> {
                     speedNotification.stop()
@@ -107,26 +111,40 @@ class NativeVpnImpl(
     }
 
     /**
-     * Отменяет foreground-уведомление «is running in foreground», показываемое
-     * библиотекой trusttunnel-client-android. Наше уведомление скорости
-     * (канал tt_speed_channel) при этом не трогается.
+     * Отменяет foreground-уведомление «vpn.js is running in foreground»,
+     * показываемое библиотекой trusttunnel-client-android.
+     * Наше уведомление скорости (канал tt_speed_channel) при этом не трогается.
+     *
+     * Критерии совпадения (достаточно одного):
+     *   • текст содержит "running in foreground"  — стандартная фраза Android foreground-service
+     *   • текст содержит "vpn.js"                 — имя Go/JS-воркера библиотеки
+     *   • канал уведомления НЕ является нашим tt_speed_channel И пакет отправителя совпадает с нашим
+     *     И заголовок содержит "TrustTunnel"
      */
     private fun cancelForegroundServiceNotification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
+                val ourPkg = appContext.packageName
                 for (sbn in notifManager.activeNotifications) {
                     val channelId = sbn.notification.channelId ?: ""
-                    val title = sbn.notification.extras?.getCharSequence("android.title")?.toString() ?: ""
-                    val text = sbn.notification.extras?.getCharSequence("android.text")?.toString() ?: ""
+                    val extras   = sbn.notification.extras
+                    val title = extras?.getCharSequence("android.title")?.toString() ?: ""
+                    val text  = extras?.getCharSequence("android.text")?.toString()  ?: ""
+                    val pkg   = sbn.packageName ?: ""
 
-                    val isSpeedNotification = channelId == SpeedNotificationManager.CHANNEL_ID
+                    // Наше уведомление со скоростью — не трогаем
+                    if (channelId == SpeedNotificationManager.CHANNEL_ID) continue
 
-                    val isForegroundVpnNotification =
-                        title.contains("TrustTunnel", ignoreCase = true) ||
-                        text.contains("running in foreground", ignoreCase = true) ||
-                        text.contains("VPN", ignoreCase = true)
+                    val isVpnJsNotification =
+                        text.contains("vpn.js", ignoreCase = true) ||
+                        text.contains("running in foreground", ignoreCase = true)
 
-                    if (!isSpeedNotification && isForegroundVpnNotification) {
+                    val isTrustTunnelOwnNotif =
+                        pkg == ourPkg &&
+                        title.contains("TrustTunnel", ignoreCase = true)
+
+                    if (isVpnJsNotification || isTrustTunnelOwnNotif) {
+                        Log.d("VPN_PLUGIN", "cancel foreground notif id=${sbn.id} tag=${sbn.tag} channel=$channelId title=$title text=$text")
                         notifManager.cancel(sbn.tag, sbn.id)
                     }
                 }
