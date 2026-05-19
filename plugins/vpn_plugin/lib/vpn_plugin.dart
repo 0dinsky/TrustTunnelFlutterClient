@@ -70,6 +70,12 @@ abstract class VpnPlugin {
   /// Emits [QueryLogRow] objects representing network traffic passing through the VPN.
   /// {@endtemplate}
   abstract final Stream<QueryLogRow> queryLog;
+
+  /// Enables or disables the persistent speed notification.
+  ///
+  /// On Android 13+ the plugin will request POST_NOTIFICATIONS permission
+  /// automatically before showing the notification.
+  Future<void> setSpeedNotificationEnabled({required bool enabled});
 }
 
 /// {@template vpn_plugin_impl}

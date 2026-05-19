@@ -127,9 +127,8 @@ class VpnDataSourceImpl implements VpnDataSource {
   Future<void> stop() => _platformApi.stop();
 
   @override
-  Future<void> setSpeedNotificationEnabled({required bool enabled}) async {
-    // No-op on platforms that don't support speed notifications.
-  }
+  Future<void> setSpeedNotificationEnabled({required bool enabled}) =>
+      _platformApi.setSpeedNotificationEnabled(enabled: enabled);
 
   /// {@macro vpn_data_source_request_state}
   ///
