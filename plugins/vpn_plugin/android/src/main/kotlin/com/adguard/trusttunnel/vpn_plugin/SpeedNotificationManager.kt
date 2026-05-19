@@ -123,7 +123,10 @@ class SpeedNotificationManager(private val context: Context) {
         )
 
         return NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setSmallIcon(android.R.drawable.stat_sys_download_done)
+            .setPriority(NotificationCompat.PRIORITY_MIN)
+            .setCategory(NotificationCompat.CATEGORY_SERVICE)
+            .setVisibility(NotificationCompat.VISIBILITY_SECRET)
             .setContentTitle("TrustTunnel VPN")
             .setContentText(speedText)
             .setOngoing(true)
@@ -147,6 +150,8 @@ class SpeedNotificationManager(private val context: Context) {
             ).apply {
                 description = "Показывает скорость VPN соединения"
                 setShowBadge(false)
+                enableLights(false)
+                enableVibration(false)
             }
             notificationManager.createNotificationChannel(channel)
         }
