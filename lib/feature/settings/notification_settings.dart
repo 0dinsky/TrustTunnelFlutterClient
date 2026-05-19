@@ -48,8 +48,8 @@ class _NotificationTileState extends State<NotificationTile> {
     if (_loading) return const SizedBox.shrink();
     return SwitchListTile(
       secondary: const Icon(Icons.speed),
-      title: const Text('Скорость в уведомлении'),
-      subtitle: const Text('Показывает ↓↑ скорость и кнопку «Отключить»'),
+      title: Text(context.ln.speedNotificationTitle),
+      subtitle: Text(context.ln.speedNotificationSubtitle),
       value: _enabled,
       onChanged: _toggle,
     );

@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS servers(
   custom_sni TEXT,
   skip_cert_verification BOOLEAN NOT NULL DEFAULT false,
   anti_dpi BOOLEAN NOT NULL DEFAULT false,
+  mtu_size INTEGER,
   FOREIGN KEY (vpn_protocol_id) REFERENCES protocols(id),
   FOREIGN KEY (routing_profile_id) REFERENCES routing_profiles(id)
 );

@@ -64,7 +64,7 @@ class _AppearanceSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
           child: Text(
-            'Внешний вид',
+            context.ln.appearance,
             style: Theme.of(context).textTheme.labelMedium?.copyWith(
               color: Theme.of(context).colorScheme.primary,
             ),
@@ -77,12 +77,12 @@ class _AppearanceSection extends StatelessWidget {
             children: [
               const Icon(Icons.brightness_6, size: 20),
               const SizedBox(width: 12),
-              const Text('Тема'),
+              Text(context.ln.themeLabel),
               const Spacer(),
               SegmentedButton<bool>(
                 segments: const [
-                  ButtonSegment(value: false, label: Text('Светлая'), icon: Icon(Icons.light_mode, size: 16)),
-                  ButtonSegment(value: true,  label: Text('Тёмная'),  icon: Icon(Icons.dark_mode,  size: 16)),
+                  ButtonSegment(value: false, label: Text(context.ln.themeLight), icon: const Icon(Icons.light_mode, size: 16)),
+                  ButtonSegment(value: true,  label: Text(context.ln.themeDark),  icon: const Icon(Icons.dark_mode,  size: 16)),
                 ],
                 selected: {scope.isDark},
                 onSelectionChanged: (v) => scope.setDark(v.first),
@@ -97,8 +97,8 @@ class _AppearanceSection extends StatelessWidget {
           child: scope.isDark
               ? SwitchListTile(
                   secondary: const Icon(Icons.nights_stay),
-                  title: const Text('AMOLED'),
-                  subtitle: const Text('Чисто чёрный фон'),
+                  title: Text(context.ln.amoledTitle),
+                  subtitle: Text(context.ln.amoledSubtitle),
                   value: scope.isAmoled,
                   onChanged: scope.setAmoled,
                   dense: true,
@@ -145,7 +145,7 @@ class _AccentColorPicker extends StatelessWidget {
           const Row(children: [
             Icon(Icons.palette, size: 20),
             SizedBox(width: 12),
-            Text('Цвет акцента'),
+            Text(context.ln.accentColorLabel),
           ]),
           const SizedBox(height: 10),
           SingleChildScrollView(
@@ -191,10 +191,10 @@ class _AccentColorPicker extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             scope.accentColor == null
-                ? 'Цвет обоев (Material You)'
+                ? context.ln.accentColorMaterialYou
                 : isCustom
-                    ? 'Свой цвет: #${scope.accentColor!.toARGB32().toRadixString(16).substring(2).toUpperCase()}'
-                    : '#${scope.accentColor!.toARGB32().toRadixString(16).substring(2).toUpperCase()}',
+                    ? context.ln.accentColorHex(hex: scope.accentColor!.toARGB32().toRadixString(16).substring(2).toUpperCase())
+                    : context.ln.accentColorPreset(hex: scope.accentColor!.toARGB32().toRadixString(16).substring(2).toUpperCase()),
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: Theme.of(context).colorScheme.primary,
             ),
@@ -220,7 +220,7 @@ class _AccentColorPicker extends StatelessWidget {
           final isDarkColor = ThemeData.estimateBrightnessForColor(preview) == Brightness.dark;
 
           return AlertDialog(
-            title: const Text('Свой цвет'),
+            title: Text(context.ln.accentColorCustom),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -262,14 +262,14 @@ class _AccentColorPicker extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(),
-                child: const Text('Отмена'),
+                child: Text(context.ln.cancel),
               ),
               FilledButton(
                 onPressed: () {
                   scope.setAccentColor(Color.fromRGBO(r, g, b, 1));
                   Navigator.of(ctx).pop();
                 },
-                child: const Text('Применить'),
+                child: Text(context.ln.apply),
               ),
             ],
           );
@@ -372,20 +372,20 @@ class _ColorCircle extends StatelessWidget {
 class _LanguageTile extends StatelessWidget {
   const _LanguageTile();
 
-  static const _supported = [
-    (LocaleType.system, '🌐', 'Системный'),
+  List<(LocaleType, String, String)> _supported(BuildContext context) => [
+    (LocaleType.system, '🌐', context.ln.systemLanguage),
     (LocaleType.ru,     '🇷🇺', 'Русский'),
     (LocaleType.en,     '🇬🇧', 'English'),
   ];
 
-  String _currentLabel(Locale? locale) {
-    if (locale == null) return '🌐 Системный';
-    for (final entry in _supported) {
+  String _currentLabel(Locale? locale, BuildContext context) {
+    if (locale == null) return '🌐 ${context.ln.systemLanguage}';
+    for (final entry in _supported(context)) {
       if (entry.$1.value?.languageCode == locale.languageCode) {
         return '${entry.$2} ${entry.$3}';
       }
     }
-    return '🌐 Системный';
+    return '🌐 ${context.ln.systemLanguage}';
   }
 
   @override
@@ -393,8 +393,8 @@ class _LanguageTile extends StatelessWidget {
     final scope = LocaleScope.of(context);
     return ListTile(
       leading: const Icon(Icons.language),
-      title: const Text('Язык'),
-      subtitle: Text(_currentLabel(scope.locale)),
+      title: Text(context.ln.language),
+      subtitle: Text(_currentLabel(scope.locale, context)),
       onTap: () => _showDialog(context, scope),
     );
   }
@@ -403,8 +403,8 @@ class _LanguageTile extends StatelessWidget {
     showDialog<void>(
       context: context,
       builder: (ctx) => SimpleDialog(
-        title: const Text('Выбрать язык'),
-        children: _supported.map((entry) {
+        title: Text(ctx.ln.selectLanguage),
+        children: _supported(ctx).map((entry) {
           final locType    = entry.$1;
           final flag       = entry.$2;
           final name       = entry.$3;

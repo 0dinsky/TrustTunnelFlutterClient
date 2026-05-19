@@ -154,6 +154,7 @@ final class ServerDetailsController extends BaseStateController<ServerDetailsSta
     ValueData<String>? customSni,
     bool? skipCertVerification,
     bool? antiDpi,
+    int? mtu,
   }) => handle(() {
     setState(
       ServerDetailsState.idle(
@@ -174,6 +175,7 @@ final class ServerDetailsController extends BaseStateController<ServerDetailsSta
           customSni: customSni == null ? null : ValueData(customSni.value?.trim()),
           skipCertVerification: skipCertVerification ?? state.data.skipCertVerification,
           antiDpi: antiDpi ?? state.data.antiDpi,
+          mtu: mtu ?? state.data.mtu,
         ),
       ),
     );

@@ -130,5 +130,39 @@
   "tlsOutOfBoundsError": "Маска и значение должны иметь одинаковую длину",
   "tlsWrongFieldError": "Шестнадцатеричная последовательность допускает только символы 0-9, a-f",
   "tlsWrongValueError": "Значение должно содержать чётное количество символов",
-  "tlsWrongMaskError": "Маска и значение должны содержать чётное количество символов"
+  "tlsWrongMaskError": "Маска и значение должны содержать чётное количество символов",
+  "speedNotificationTitle": "Скорость в уведомлении",
+  "speedNotificationSubtitle": "Показывает ↓↑ скорость и кнопку «Отключить»",
+  "appearance": "Внешний вид",
+  "themeLabel": "Тема",
+  "themeLight": "Светлая",
+  "themeDark": "Тёмная",
+  "amoledTitle": "AMOLED",
+  "amoledSubtitle": "Чисто чёрный фон",
+  "accentColorLabel": "Цвет акцента",
+  "accentColorMaterialYou": "Цвет обоев (Material You)",
+  "accentColorCustom": "Свой цвет",
+  "accentColorHex": "Свой цвет: #{hex}",
+  "@accentColorHex": {
+    "placeholders": {
+      "hex": { "type": "String" }
+    }
+  },
+  "accentColorPreset": "#{hex}",
+  "@accentColorPreset": {
+    "placeholders": {
+      "hex": { "type": "String" }
+    }
+  },
+  "apply": "Применить",
+  "selectLanguage": "Выбрать язык",
+  "systemLanguage": "Системный",
+  "skipCertVerificationLabel": "Пропустить проверку сертификата",
+  "skipCertVerificationSubtitle": "Небезопасно — только для тестирования",
+  "antiDpiLabel": "Anti-DPI",
+  "antiDpiSubtitle": "Фрагментация TLS ClientHello для обхода DPI",
+  "mtuLabel": "MTU",
+  "mtuHint": "1280",
+  "mtuHelper": "Размер MTU туннеля (по умолчанию: 1280, диапазон: 576–9000)",
+  "mtuError": "Введите число от 576 до 9000"
 }

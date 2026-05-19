@@ -270,8 +270,8 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
           ),
           CheckboxListTile(
             value: _formData.skipCertVerification,
-            title: const Text('Пропустить проверку сертификата'),
-            subtitle: const Text('Небезопасно — только для тестирования'),
+            title: Text(context.ln.skipCertVerificationLabel),
+            subtitle: Text(context.ln.skipCertVerificationSubtitle),
             contentPadding: const EdgeInsets.all(4),
             onChanged: (value) => _onDataChanged(
               context,
@@ -280,17 +280,37 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
           ),
           CheckboxListTile(
             value: _formData.antiDpi,
-            title: const Text('Anti-DPI'),
-            subtitle: const Text('Фрагментация TLS ClientHello для обхода DPI'),
+            title: Text(context.ln.antiDpiLabel),
+            subtitle: Text(context.ln.antiDpiSubtitle),
             contentPadding: const EdgeInsets.all(4),
             onChanged: (value) => _onDataChanged(
               context,
               antiDpi: value ?? false,
             ),
           ),
+          const SizedBox(height: 16),
+          CustomTextField(
+            value: _formData.mtu?.toString(),
+            label: context.ln.mtuLabel,
+            hint: context.ln.mtuHint,
+            helper: context.ln.mtuHelper,
+            keyboardType: TextInputType.number,
+            onChanged: (v) {
+              final parsed = int.tryParse(v.trim());
+              _onDataChanged(context, mtu: parsed);
+            },
+            error: _mtuError(context),
+          ),
         ],
       ),
     );
+  }
+
+  String? _mtuError(BuildContext context) {
+    final mtu = _formData.mtu;
+    if (mtu == null) return null;
+    if (mtu < 576 || mtu > 9000) return context.ln.mtuError;
+    return null;
   }
 
   RoutingProfile _getSelectedRoutingProfile(List<RoutingProfile> availableRoutingProfiles, String routingProfileId) =>
@@ -320,6 +340,7 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
     ValueData<String>? customSni,
     bool? skipCertVerification,
     bool? antiDpi,
+    int? mtu,
   }) =>
       ServerDetailsScope.controllerOf(
         context,
@@ -338,5 +359,6 @@ class _ServerDetailsFormState extends State<ServerDetailsForm> {
         customSni: customSni,
         skipCertVerification: skipCertVerification,
         antiDpi: antiDpi,
+        mtu: mtu,
       );
 }

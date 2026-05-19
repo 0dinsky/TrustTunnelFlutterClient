@@ -58,6 +58,9 @@ class ServerData {
   /// Enable Anti-DPI mode (TLS fragmentation / randomized hello).
   final bool antiDpi;
 
+  /// Custom MTU size for the TUN interface. null = use default (1280).
+  final int? mtu;
+
   /// {@macro server}
   const ServerData({
     required this.name,
@@ -74,6 +77,7 @@ class ServerData {
     this.customSni,
     this.skipCertVerification = false,
     this.antiDpi = false,
+    this.mtu,
     this.selected = false,
   });
 
@@ -92,6 +96,7 @@ class ServerData {
     this.customSni,
     this.skipCertVerification = false,
     this.antiDpi = false,
+    this.mtu,
     this.selected = false,
   });
 
@@ -112,6 +117,7 @@ class ServerData {
     customSni,
     skipCertVerification,
     antiDpi,
+    mtu,
   );
 
   @override
@@ -152,7 +158,8 @@ class ServerData {
         other.certificate == certificate &&
         other.customSni == customSni &&
         other.skipCertVerification == skipCertVerification &&
-        other.antiDpi == antiDpi;
+        other.antiDpi == antiDpi &&
+        other.mtu == mtu;
   }
 
   /// Creates a copy of this server with the given fields replaced.
@@ -174,6 +181,7 @@ class ServerData {
     ValueData<String>? customSni,
     bool? skipCertVerification,
     bool? antiDpi,
+    int? mtu,
   }) => ServerData(
     name: name ?? this.name,
     ipAddress: ipAddress ?? this.ipAddress,
@@ -190,5 +198,6 @@ class ServerData {
     customSni: customSni != null ? customSni.value : this.customSni,
     skipCertVerification: skipCertVerification ?? this.skipCertVerification,
     antiDpi: antiDpi ?? this.antiDpi,
+    mtu: mtu ?? this.mtu,
   );
 }

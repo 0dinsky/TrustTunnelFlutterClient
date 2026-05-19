@@ -130,5 +130,39 @@
   "tlsOutOfBoundsError": "Mask and value should have the same length",
   "tlsWrongFieldError": "Hex sequence only allows 0-9, a-f characters",
   "tlsWrongValueError": "Value should have an even number of characters",
-  "tlsWrongMaskError": "Mask and value should have an even number of characters"
+  "tlsWrongMaskError": "Mask and value should have an even number of characters",
+  "speedNotificationTitle": "Speed notification",
+  "speedNotificationSubtitle": "Shows ↓↑ speed and a Disconnect button",
+  "appearance": "Appearance",
+  "themeLabel": "Theme",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "amoledTitle": "AMOLED",
+  "amoledSubtitle": "Pure black background",
+  "accentColorLabel": "Accent color",
+  "accentColorMaterialYou": "Wallpaper color (Material You)",
+  "accentColorCustom": "Custom color",
+  "accentColorHex": "Custom: #{hex}",
+  "@accentColorHex": {
+    "placeholders": {
+      "hex": { "type": "String" }
+    }
+  },
+  "accentColorPreset": "#{hex}",
+  "@accentColorPreset": {
+    "placeholders": {
+      "hex": { "type": "String" }
+    }
+  },
+  "apply": "Apply",
+  "selectLanguage": "Select language",
+  "systemLanguage": "System",
+  "skipCertVerificationLabel": "Skip certificate verification",
+  "skipCertVerificationSubtitle": "Insecure — for testing only",
+  "antiDpiLabel": "Anti-DPI",
+  "antiDpiSubtitle": "TLS ClientHello fragmentation to bypass DPI",
+  "mtuLabel": "MTU",
+  "mtuHint": "1280",
+  "mtuHelper": "Tunnel MTU size (default: 1280, range: 576–9000)",
+  "mtuError": "Enter a number between 576 and 9000"
 }

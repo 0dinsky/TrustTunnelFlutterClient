@@ -22,6 +22,7 @@ typedef DataChangedCallback =
       ValueData<String>? customSni,
       bool? skipCertVerification,
       bool? antiDpi,
+      int? mtu,
     });
 
 abstract class ServerDetailsScopeController {

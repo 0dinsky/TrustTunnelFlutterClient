@@ -51,10 +51,9 @@ class ServerDataSourceImpl implements ServerDataSource {
         customSni: Value(request.customSni),
         skipCertVerification: Value(request.skipCertVerification),
         antiDpi: Value(request.antiDpi),
+        mtuSize: Value(request.mtu),
       ),
     );
-
-    await database.dnsServers.insertAll(
       request.dnsServers.map(
         (s) => db.DnsServersCompanion.insert(
           serverId: id,
@@ -86,6 +85,7 @@ class ServerDataSourceImpl implements ServerDataSource {
         customSni: request.customSni,
         skipCertVerification: request.skipCertVerification,
         antiDpi: request.antiDpi,
+        mtu: request.mtu,
       ),
     );
   }
@@ -139,6 +139,7 @@ class ServerDataSourceImpl implements ServerDataSource {
             customSni: e.customSni,
             skipCertVerification: e.skipCertVerification,
             antiDpi: e.antiDpi,
+            mtu: e.mtuSize,
           ),
         );
       },
@@ -202,6 +203,7 @@ class ServerDataSourceImpl implements ServerDataSource {
         customSni: Value(request.customSni),
         skipCertVerification: Value(request.skipCertVerification),
         antiDpi: Value(request.antiDpi),
+        mtuSize: Value(request.mtu),
       ),
     );
 
@@ -255,6 +257,7 @@ class ServerDataSourceImpl implements ServerDataSource {
         customSni: server.customSni,
         skipCertVerification: server.skipCertVerification,
         antiDpi: server.antiDpi,
+        mtu: server.mtuSize,
       ),
     );
   }

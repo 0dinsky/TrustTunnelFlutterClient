@@ -36,13 +36,9 @@ class App extends StatelessWidget {
         }
 
         // ── Темы ──────────────────────────────────────────────────────────
-        final lightTheme = context.dependencyFactory.lightThemeData.copyWith(
-          primaryColor: seed,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: seed,
-            brightness: Brightness.light,
-          ),
-        );
+        // LightTheme создаётся каждый раз с актуальным seed, иначе
+        // switchTheme/FAB/etc остаются с дефолтным синим из кэша
+        final lightTheme = LightTheme(accent: seed).data;
 
         final ThemeData darkTheme = themeScope.isAmoled
             ? AmoledTheme(accent: seed).data
