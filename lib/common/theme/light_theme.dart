@@ -249,8 +249,27 @@ class LightTheme {
       },
     ),
     overlayColor: const WidgetStatePropertyAll(_staticTransparent),
-    
-    
+    thumbIcon: WidgetStateProperty.resolveWith(
+      (states) {
+        final enabled = states.contains(WidgetState.selected);
+        final isLightAccent = ThemeData.estimateBrightnessForColor(_accent) == Brightness.light;
+
+        if (enabled) {
+          return Icon(
+            Icons.check_rounded,
+            size: 14,
+            color: isLightAccent ? const Color(0xFF111111) : Colors.white,
+          );
+        }
+
+        return Icon(
+          Icons.close_rounded,
+          size: 12,
+          color: _background.withValues(alpha: 0.75),
+        );
+      },
+    ),
+
   );
 
   late final _snackBarThemeData = SnackBarThemeData(
