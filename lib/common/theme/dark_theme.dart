@@ -13,6 +13,9 @@ class DarkTheme {
     _blend          = accent.withValues(alpha: 0.2);
     _blendHover     = accent.withValues(alpha: 0.3);
     _blendPressed   = accent.withValues(alpha: 0.4);
+    _fabForeground  = ThemeData.estimateBrightnessForColor(accent) == Brightness.light
+        ? const Color(0xFF1A2028)
+        : const Color(0xFFFFFFFF);
   }
 
   final Color _accent;
@@ -23,6 +26,7 @@ class DarkTheme {
   late final Color _blend;
   late final Color _blendHover;
   late final Color _blendPressed;
+  late final Color _fabForeground;
 
   static const _attention = Color(0xFFFFA424);
   static const _attentionHover = Color(0xFFF08400);
@@ -839,7 +843,11 @@ class DarkTheme {
   late final _customFilledIconButtonTheme = CustomFilledIconButtonTheme(
     iconButton: IconButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: const WidgetStatePropertyAll(_specialStaticWhite),
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? _fabForeground
+              : _specialStaticWhite,
+        ),
         backgroundColor: WidgetStateProperty.resolveWith(
           (states) {
             if (states.contains(WidgetState.selected)) return _accent;
@@ -850,7 +858,11 @@ class DarkTheme {
     ),
     iconButtonInProgress: IconButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: const WidgetStatePropertyAll(_specialStaticWhite),
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? _fabForeground
+              : _specialStaticWhite,
+        ),
         backgroundColor: WidgetStateProperty.resolveWith(
           (states) {
             if (states.contains(WidgetState.selected)) return _accent;

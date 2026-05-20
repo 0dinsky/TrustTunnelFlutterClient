@@ -937,7 +937,11 @@ class LightTheme {
   late final _customFilledIconButtonTheme = CustomFilledIconButtonTheme(
     iconButton: IconButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll(_fabForeground),
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? _fabForeground
+              : _specialStaticWhite,
+        ),
         backgroundColor: WidgetStateProperty.resolveWith(
           (states) {
             if (states.contains(WidgetState.selected)) {
@@ -951,7 +955,11 @@ class LightTheme {
     ),
     iconButtonInProgress: IconButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll(_fabForeground),
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? _fabForeground
+              : _specialStaticWhite,
+        ),
         backgroundColor: WidgetStateProperty.resolveWith(
           (states) {
             if (states.contains(WidgetState.selected)) {
