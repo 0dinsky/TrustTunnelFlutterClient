@@ -255,7 +255,7 @@ class CustomFilledButtonTheme extends ThemeExtension<CustomFilledButtonTheme> {
   }) => CustomFilledButtonTheme(
     danger: danger ?? this.danger,
     attention: attention ?? this.attention,
-    iconButton: attention ?? this.iconButton,
+    iconButton: iconButton ?? this.iconButton,
   );
 
   @override

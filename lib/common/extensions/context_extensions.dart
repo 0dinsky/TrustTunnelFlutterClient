@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:trusttunnel/common/extensions/theme_extensions.dart';
-import 'package:trusttunnel/common/router/page/route/popup_route.dart';
 import 'package:trusttunnel/common/utils/common_utils.dart';
 import 'package:trusttunnel/data/model/breakpoint.dart';
 import 'package:trusttunnel/di/widgets/dependency_scope.dart';
@@ -79,38 +78,3 @@ extension NavigatorExtension on BuildContext {
   );
 }
 
-extension RouterExtension on BuildContext {
-  /// Pushes a new [PopUpRoute] and pops the current route off the navigator stack if [replace] is true.
-  /// Before setting [replace] to true, ensure that the top route is a [PopUpRoute].
-  Future<T?> pushPopUp<T extends Object?>(
-    Widget widget, {
-    bool fullScreen = true,
-    Duration? transitionDuration,
-    Duration? reverseTransitionDuration,
-    bool replace = false,
-    bool rootNavigator = true,
-  }) {
-    final actualNavigator = Navigator.of(this, rootNavigator: rootNavigator);
-    final result = replace
-        ? actualNavigator.pushReplacement<T, dynamic>(
-            PopUpRoute(
-              builder: (context) => widget,
-              context: this,
-              fullScreenDialog: fullScreen,
-              transitionDuration: transitionDuration,
-              reverseTransitionDuration: reverseTransitionDuration,
-            ),
-          )
-        : actualNavigator.push<T>(
-            PopUpRoute(
-              builder: (context) => widget,
-              context: this,
-              fullScreenDialog: fullScreen,
-              transitionDuration: transitionDuration,
-              reverseTransitionDuration: reverseTransitionDuration,
-            ),
-          );
-
-    return result;
-  }
-}

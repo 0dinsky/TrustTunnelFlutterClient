@@ -84,7 +84,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
 // TODO: Make navigator works with deeplink in right way
 // Konstantin Gorynin <k.gorynin@adguard.com>, 31 March 2026
-  Widget getScreenByIndex(
+  Widget _getScreenByIndex(
     int selectedIndex, {
     ServerData? deepLinkData,
   }) => switch (selectedIndex) {
@@ -115,7 +115,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       _selectedTabNotifier.value = selectedIndex;
       _navigatorKey.currentState!.pushAndRemoveUntil(
         PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => getScreenByIndex(
+          pageBuilder: (context, animation, secondaryAnimation) => _getScreenByIndex(
             selectedIndex,
             deepLinkData: deepLinkData,
           ),

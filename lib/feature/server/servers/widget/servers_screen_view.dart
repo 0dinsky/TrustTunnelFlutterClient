@@ -128,8 +128,6 @@ class _ServersScreenViewState extends State<ServersScreenView> {
         preloadedData: preloadedData,
       );
     } else if (deepLinkUri != null) {
-      // Парсим ссылку через DeepLinkController
-      final controller = ServersScope.controllerOf(context, listen: false);
       try {
         final parsed = await context.repositoryFactory.deepLinkRepository.parseDataFromLink(
           deepLink: deepLinkUri.toString(),
