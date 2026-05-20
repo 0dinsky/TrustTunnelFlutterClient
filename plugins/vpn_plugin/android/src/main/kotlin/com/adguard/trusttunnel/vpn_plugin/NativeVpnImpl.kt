@@ -1,6 +1,8 @@
 package com.adguard.trusttunnel.vpn_plugin
 
+import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -103,10 +105,21 @@ class NativeVpnImpl(
             stop()
         }
     }
-                }
-            } catch (e: Exception) {
-                Log.w("VPN_PLUGIN", "cancelForegroundServiceNotification failed", e)
+
+    /**
+     * Отменяет foreground-уведомление, созданное нативной библиотекой VPN.
+     * Наше собственное уведомление скорости (ID = 9001) не трогаем.
+     */
+    private fun cancelForegroundServiceNotification() {
+        try {
+            val nm = appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                nm.activeNotifications
+                    .filter { it.id != SpeedNotificationManager.NOTIFICATION_ID }
+                    .forEach { nm.cancel(it.id) }
             }
+        } catch (e: Exception) {
+            Log.w("VPN_PLUGIN", "cancelForegroundServiceNotification failed", e)
         }
     }
 
