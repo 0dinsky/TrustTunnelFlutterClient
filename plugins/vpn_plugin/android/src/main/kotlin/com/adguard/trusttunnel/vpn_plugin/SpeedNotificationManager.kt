@@ -22,7 +22,7 @@ class SpeedNotificationManager(private val context: Context) {
 
     companion object {
         internal const val CHANNEL_ID      = "tt_speed_channel"
-        private  const val NOTIFICATION_ID  = 9001
+        internal const val NOTIFICATION_ID  = 9001
         private const val ACTION_STOP      = "com.adguard.trusttunnel.STOP_VPN"
         private const val UPDATE_INTERVAL  = 1000L // 1 секунда
     }
