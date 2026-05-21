@@ -20,19 +20,30 @@ class ServersCardConnectionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool pending = isPendingResult(vpnManagerState);
+    final bool pending = isPendingResult(vpnManagerState);
+    final bool connected = vpnManagerState == VpnState.connected;
+
+    final ext = context.theme.extension<CustomFilledIconButtonTheme>()!;
+    final themeStyle = (pending ? ext.iconButtonInProgress : ext.iconButton).style;
+
+    // Явно резолвим цвет иконки — не полагаемся на IconTheme cascade от IconButton,
+    // который ломается когда CustomIcon строится до оборачивания виджета темой.
+    final Set<WidgetState> states = {
+      if (pending || connected) WidgetState.selected,
+    };
+    final Color iconColor =
+        themeStyle?.foregroundColor?.resolve(states) ??
+        context.theme.iconTheme.color ??
+        Colors.white;
 
     return Theme(
-      data: context.theme.copyWith(
-        iconButtonTheme: pending
-            ? context.theme.extension<CustomFilledIconButtonTheme>()!.iconButtonInProgress
-            : context.theme.extension<CustomFilledIconButtonTheme>()!.iconButton,
-      ),
+      data: context.theme.copyWith(iconButtonTheme: pending ? ext.iconButtonInProgress : ext.iconButton),
       child: pending
           ? RotatingWidget(
               duration: const Duration(seconds: 1),
               child: CustomIconButton.square(
                 icon: AssetIcons.update,
+                color: iconColor,
                 onPressed: onPressed,
                 size: 24,
                 selected: true,
@@ -40,9 +51,10 @@ class ServersCardConnectionButton extends StatelessWidget {
             )
           : CustomIconButton.square(
               icon: AssetIcons.powerSettingsNew,
+              color: iconColor,
               onPressed: onPressed,
               size: 24,
-              selected: vpnManagerState == VpnState.connected,
+              selected: connected,
             ),
     );
   }

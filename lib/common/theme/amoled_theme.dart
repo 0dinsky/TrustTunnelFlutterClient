@@ -863,7 +863,11 @@ class AmoledTheme {
   late final _customFilledIconButtonTheme = CustomFilledIconButtonTheme(
     iconButton: IconButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: const WidgetStatePropertyAll(_specialStaticWhite),
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? _fabForeground
+              : _specialStaticWhite,
+        ),
         backgroundColor: WidgetStateProperty.resolveWith(
           (states) {
             if (states.contains(WidgetState.selected)) return _accent;
@@ -874,7 +878,11 @@ class AmoledTheme {
     ),
     iconButtonInProgress: IconButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: const WidgetStatePropertyAll(_specialStaticWhite),
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? _fabForeground
+              : _specialStaticWhite,
+        ),
         backgroundColor: WidgetStateProperty.resolveWith(
           (states) {
             if (states.contains(WidgetState.selected)) return _accent;
