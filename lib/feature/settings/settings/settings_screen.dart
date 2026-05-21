@@ -157,7 +157,15 @@ class _AccentColorPicker extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                   isSelected: scope.accentColor == null,
                   onTap: () => scope.setAccentColor(null),
-                  child: const Icon(Icons.auto_awesome, size: 14, color: Colors.white),
+                  child: Icon(
+                    Icons.auto_awesome,
+                    size: 14,
+                    color: ThemeData.estimateBrightnessForColor(
+                              Theme.of(context).colorScheme.primary,
+                            ) == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 // Пресеты
@@ -196,7 +204,16 @@ class _AccentColorPicker extends StatelessWidget {
                     ? context.ln.accentColorHex(scope.accentColor!.toARGB32().toRadixString(16).substring(2).toUpperCase())
                     : context.ln.accentColorPreset(scope.accentColor!.toARGB32().toRadixString(16).substring(2).toUpperCase()),
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
+              color: () {
+                final primary = Theme.of(context).colorScheme.primary;
+                final onSurface = Theme.of(context).colorScheme.onSurface;
+                // Если акцент слишком светлый — он плохо читается на фоне карточки,
+                // переключаемся на стандартный onSurface.
+                return ThemeData.estimateBrightnessForColor(primary) == Brightness.light &&
+                        Theme.of(context).brightness == Brightness.light
+                    ? onSurface.withValues(alpha: 0.6)
+                    : primary;
+              }(),
             ),
           ),
         ],
