@@ -417,7 +417,7 @@ class LightTheme {
           return _accent;
         },
       ),
-      foregroundColor: const WidgetStatePropertyAll(_specialStaticWhite),
+      foregroundColor: WidgetStatePropertyAll(_fabForeground),
       overlayColor: WidgetStateProperty.resolveWith(
         (states) {
           if (states.contains(WidgetState.pressed)) return _accentPressed;
