@@ -82,8 +82,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
     ),
   );
 
-// TODO: Make navigator works with deeplink in right way
-// Konstantin Gorynin <k.gorynin@adguard.com>, 31 March 2026
   Widget _getScreenByIndex(
     int selectedIndex, {
     ServerData? deepLinkData,

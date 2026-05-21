@@ -277,8 +277,6 @@ class ServerDataSourceImpl implements ServerDataSource {
       domain: configuration.endpoint.hostName,
       username: configuration.endpoint.username,
       password: configuration.endpoint.password,
-      // TODO: Create encoder
-      // Konstantin Gorynin <k.gorynin@adguard.com>, 09 March 2026
       vpnProtocol: configuration.endpoint.upStreamProtocol == UpStreamProtocol.http2
           ? VpnProtocol.http2
           : VpnProtocol.quic,

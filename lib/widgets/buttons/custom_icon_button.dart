@@ -107,8 +107,6 @@ class _CustomIconButtonState extends State<CustomIconButton> {
             }
           : null,
       tooltip: widget.tooltip ?? '',
-      // TODO: Check padding
-      // Konstantin Gorynin <k.gorynin@adguard.com>, 29 August 2025
       padding: EdgeInsets.all(widget.padding ?? 8),
       isSelected: _isSelected,
       selectedIcon: selectedIcon,

@@ -68,8 +68,6 @@ class CustomSnackBar extends SnackBar {
                     disabledColor: Colors.transparent,
                     focusColor: Colors.transparent,
                     highlightColor: Colors.transparent,
-                    // TODO: Fix hover color
-                    // Konstantin Gorynin <k.gorynin@adguard.com>, 15 October 2025
                     iconButtonTheme: const IconButtonThemeData(
                       style: ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(

@@ -240,8 +240,8 @@ class DarkTheme {
       },
     ),
     overlayColor: const WidgetStatePropertyAll(_staticTransparent),
-    
-    
+
+
   );
 
   late final _snackBarThemeData = SnackBarThemeData(
